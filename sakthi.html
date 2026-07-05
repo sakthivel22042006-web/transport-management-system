@@ -1,0 +1,1190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sri Sakthi Transport — All India Tours & Live Tracker</title>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Orbitron:wght@700;900&family=Exo+2:wght@300;400;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --fire:#ff4500;--fire2:#ff6030;--gold:#ffd700;--amber:#ff9900;
+  --deep:#06080d;--bg:#0a0d15;--bg2:#0f1320;--bg3:#141a28;
+  --card:#111827;--card2:#192033;--border:#1f2d45;--border2:#2a3d5a;
+  --text:#eef2ff;--sub:#8899bb;--dim:#4a5a7a;
+  --green:#22c55e;--r:14px;
+  --track-bg:#0d1420;--route1:#ff4500;--route2:#ffd700;--route3:#00e5ff;--route4:#a855f7;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'Exo 2',sans-serif;min-height:100vh;overflow-x:hidden;}
+::-webkit-scrollbar{width:5px;}
+::-webkit-scrollbar-track{background:var(--deep);}
+::-webkit-scrollbar-thumb{background:var(--fire);border-radius:3px;}
+a{color:var(--amber);}
+
+/* PARTICLES */
+#bgfx{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
+.dot{position:absolute;border-radius:50%;animation:rise linear infinite;opacity:0;}
+@keyframes rise{0%{transform:translateY(105vh);opacity:0;}8%{opacity:.35;}92%{opacity:.1;}100%{transform:translateY(-5vh);opacity:0;}}
+
+/* NAV */
+#nav{
+  position:sticky;top:0;z-index:300;
+  background:rgba(6,8,13,.97);backdrop-filter:blur(24px);
+  border-bottom:1px solid rgba(255,69,0,.18);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 26px;height:66px;gap:10px;
+}
+.logo-area{display:flex;align-items:center;gap:10px;cursor:pointer;flex-shrink:0;}
+.logo-icon{width:42px;height:42px;background:linear-gradient(135deg,var(--fire),var(--amber));border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;box-shadow:0 0 18px rgba(255,69,0,.4);}
+.logo-text{font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700;color:var(--fire);letter-spacing:1.5px;line-height:1.3;}
+.logo-text small{display:block;font-size:8px;color:var(--gold);letter-spacing:2.5px;font-weight:400;}
+.navlinks{display:flex;gap:3px;flex-wrap:wrap;}
+.nb{background:none;border:none;color:var(--sub);font-family:'Exo 2',sans-serif;font-size:11px;font-weight:600;padding:7px 12px;border-radius:7px;cursor:pointer;transition:all .18s;letter-spacing:.6px;text-transform:uppercase;white-space:nowrap;}
+.nb:hover{color:var(--text);background:var(--card2);}
+.nb.on{color:var(--gold);background:rgba(255,215,0,.08);border:1px solid rgba(255,215,0,.1);}
+.nb.cta{background:linear-gradient(135deg,var(--fire),var(--amber));color:#000;font-weight:800;}
+.nb.cta:hover{filter:brightness(1.1);transform:translateY(-1px);box-shadow:0 4px 14px rgba(255,69,0,.4);}
+.nav-live{display:flex;align-items:center;gap:6px;background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.2);border-radius:20px;padding:4px 12px;font-size:10px;font-weight:700;color:var(--green);letter-spacing:1px;}
+.live-dot{width:7px;height:7px;background:var(--green);border-radius:50%;animation:blink 1.4s ease-in-out infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+#nav-clock{font-family:'DM Mono',monospace;font-size:11px;color:var(--sub);}
+
+/* PAGES */
+.page{display:none;position:relative;z-index:1;animation:fadeUp .38s ease both;}
+.page.show{display:block;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;border:none;border-radius:9px;font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:all .22s;padding:11px 26px;letter-spacing:.5px;text-transform:uppercase;}
+.btn-fire{background:linear-gradient(135deg,var(--fire),var(--amber));color:#000;}
+.btn-fire:hover{transform:translateY(-2px);box-shadow:0 8px 26px rgba(255,69,0,.5);}
+.btn-gold{background:linear-gradient(135deg,var(--gold),var(--amber));color:#000;}
+.btn-gold:hover{transform:translateY(-2px);box-shadow:0 8px 26px rgba(255,215,0,.4);}
+.btn-ghost{background:transparent;color:var(--text);border:1.5px solid var(--border2);}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-2px);}
+.btn-cyan{background:linear-gradient(135deg,#00e5ff,#0099cc);color:#000;}
+.btn-cyan:hover{transform:translateY(-2px);box-shadow:0 8px 26px rgba(0,229,255,.4);}
+
+/* HERO */
+#hero{min-height:86vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:60px 20px 40px;position:relative;overflow:hidden;}
+.hero-glow{position:absolute;top:-100px;left:50%;transform:translateX(-50%);width:900px;height:560px;background:radial-gradient(ellipse at 50% 30%,rgba(255,69,0,.14) 0%,transparent 68%);pointer-events:none;}
+.badge-pill{display:inline-flex;align-items:center;gap:6px;background:rgba(255,69,0,.1);border:1px solid rgba(255,69,0,.3);color:var(--fire2);border-radius:100px;padding:5px 16px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:22px;animation:glow 2.5s ease-in-out infinite;}
+@keyframes glow{0%,100%{box-shadow:none}50%{box-shadow:0 0 20px rgba(255,69,0,.3)}}
+.divider-fire{width:320px;height:3px;background:linear-gradient(90deg,transparent,var(--fire),var(--gold),var(--fire),transparent);margin:0 auto 26px;border-radius:2px;}
+.hero-title{font-family:'Orbitron',sans-serif;font-size:clamp(24px,6vw,64px);font-weight:900;letter-spacing:4px;line-height:.95;background:linear-gradient(135deg,#fff 15%,var(--gold) 45%,var(--fire) 85%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:10px;text-transform:uppercase;}
+.hero-sub{font-family:'Rajdhani',sans-serif;font-size:clamp(13px,2.5vw,19px);color:var(--sub);letter-spacing:4px;text-transform:uppercase;margin-bottom:28px;}
+.hero-desc{font-size:15px;color:var(--sub);max-width:560px;margin:0 auto 40px;line-height:1.8;}
+.hero-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+.stats-row{display:flex;width:100%;max-width:780px;border-top:1px solid var(--border);margin-top:62px;flex-wrap:wrap;}
+.stat{flex:1;min-width:130px;padding:24px 16px;text-align:center;border-right:1px solid var(--border);}
+.stat:last-child{border-right:none;}
+.stat-n{font-family:'Orbitron',sans-serif;font-size:36px;font-weight:700;color:var(--fire);letter-spacing:2px;}
+.stat-l{font-size:10px;color:var(--sub);letter-spacing:1.5px;text-transform:uppercase;margin-top:5px;}
+
+/* INNER */
+.inner{max-width:1100px;margin:0 auto;padding:50px 24px;}
+.sec-ttl{font-family:'Orbitron',sans-serif;font-size:22px;font-weight:700;color:var(--text);letter-spacing:2px;text-align:center;text-transform:uppercase;}
+.sec-ttl .hi{color:var(--fire);}
+.sec-sub{text-align:center;color:var(--sub);font-size:13px;margin:6px 0 32px;letter-spacing:.8px;}
+.rule{width:65px;height:3px;background:linear-gradient(90deg,var(--fire),var(--gold));border-radius:2px;margin:10px auto 0;}
+
+/* Services */
+.srv-g{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;}
+.srv-c{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:24px 16px;text-align:center;transition:all .22s;}
+.srv-c:hover{border-color:rgba(255,69,0,.4);transform:translateY(-4px);box-shadow:0 14px 40px rgba(255,69,0,.12);}
+.srv-ico{font-size:34px;margin-bottom:11px;}
+.srv-h{font-family:'Rajdhani',sans-serif;font-size:15px;font-weight:700;color:var(--text);margin-bottom:5px;}
+.srv-p{font-size:11px;color:var(--sub);line-height:1.55;}
+
+/* Why */
+.why-g{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:13px;}
+.why-c{background:linear-gradient(135deg,var(--card),var(--card2));border:1px solid var(--border);border-left:3px solid var(--fire);border-radius:var(--r);padding:20px;transition:all .2s;}
+.why-c:hover{border-left-color:var(--gold);transform:translateX(3px);}
+.why-c h4{font-family:'Rajdhani',sans-serif;font-size:15px;font-weight:700;color:var(--gold);margin-bottom:5px;}
+.why-c p{font-size:11px;color:var(--sub);line-height:1.6;}
+
+/* Contact */
+.contact-g{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:13px;}
+.cc{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:22px;text-align:center;}
+.cc-ico{font-size:28px;margin-bottom:8px;}
+.cc-l{font-size:10px;font-weight:700;color:var(--sub);letter-spacing:1.2px;text-transform:uppercase;margin-bottom:4px;}
+.cc-v{font-family:'Rajdhani',sans-serif;font-size:15px;font-weight:700;color:var(--text);}
+
+/* FLEET */
+.fleet-wrap{max-width:1100px;margin:0 auto;padding:40px 24px 70px;}
+.fleet-hdr{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:12px;margin-bottom:28px;}
+.flt-ttl{font-family:'Orbitron',sans-serif;font-size:24px;font-weight:700;color:var(--text);letter-spacing:2px;text-transform:uppercase;}
+.flt-ttl span{color:var(--fire);}
+.flt-sub{font-size:12px;color:var(--sub);margin-top:5px;}
+.fire-rule2{width:65px;height:3px;background:linear-gradient(90deg,var(--fire),var(--gold));border-radius:2px;margin-top:8px;}
+.bus-g{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:22px;}
+.bus-c{background:var(--card);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;cursor:pointer;transition:all .28s;position:relative;}
+.bus-c::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--fire),var(--gold),var(--fire));transform:scaleX(0);transform-origin:left;transition:transform .3s;}
+.bus-c:hover{border-color:rgba(255,69,0,.45);transform:translateY(-5px);box-shadow:0 18px 50px rgba(255,69,0,.18);}
+.bus-c:hover::after{transform:scaleX(1);}
+.bus-thumb{height:170px;overflow:hidden;position:relative;background:var(--bg3);display:flex;align-items:center;justify-content:center;font-size:60px;}
+.bus-ribbon{position:absolute;top:10px;left:0;background:linear-gradient(135deg,var(--fire),var(--amber));color:#000;font-family:'Rajdhani',sans-serif;font-size:10px;font-weight:800;padding:4px 14px 4px 10px;letter-spacing:1px;clip-path:polygon(0 0,100% 0,calc(100% - 8px) 100%,0 100%);}
+.bus-body{padding:16px 18px 18px;}
+.bus-nm{font-family:'Orbitron',sans-serif;font-size:18px;font-weight:700;color:var(--text);letter-spacing:1px;margin-bottom:7px;}
+.bdgs{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:11px;}
+.b{display:inline-block;padding:2px 9px;border-radius:4px;font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;}
+.bac{background:rgba(0,229,255,.1);color:#00e5ff;border:1px solid rgba(0,229,255,.2);}
+.bpb{background:rgba(255,69,0,.1);color:#ff7040;border:1px solid rgba(255,69,0,.2);}
+.bst{background:rgba(34,197,94,.1);color:#22c55e;border:1px solid rgba(34,197,94,.2);}
+.bnac{background:rgba(255,165,0,.1);color:#ffa040;border:1px solid rgba(255,165,0,.2);}
+.bus-specs{display:flex;flex-direction:column;gap:4px;margin-bottom:12px;}
+.sp{display:flex;align-items:center;gap:7px;font-size:11px;color:var(--sub);}
+.sp b{color:var(--text);}
+.bus-pr{font-family:'Orbitron',sans-serif;font-size:21px;font-weight:700;color:var(--gold);margin-bottom:12px;}
+.bus-pr small{font-family:'Exo 2',sans-serif;font-size:10px;color:var(--sub);font-weight:400;}
+.btn-bk{width:100%;background:linear-gradient(135deg,var(--fire),var(--amber));color:#000;border:none;border-radius:8px;padding:10px;font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;cursor:pointer;transition:all .2s;}
+.btn-bk:hover{filter:brightness(1.1);box-shadow:0 5px 18px rgba(255,69,0,.45);}
+
+/* BOOKING */
+.bk-wrap{max-width:860px;margin:0 auto;padding:40px 22px 80px;}
+.bk-panel{background:var(--card);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;box-shadow:0 24px 70px rgba(0,0,0,.55);}
+.bk-hd{background:linear-gradient(135deg,#c43200,#ff4500 40%,#ff6020 70%,#c43200 100%);padding:28px 32px;text-align:center;position:relative;overflow:hidden;}
+.bk-hd::before{content:'??';position:absolute;right:-15px;bottom:-20px;font-size:110px;opacity:.07;}
+.bk-hd::after{content:'??';position:absolute;left:-15px;bottom:-20px;font-size:110px;opacity:.07;transform:scaleX(-1);}
+.bk-hd h2{font-family:'Orbitron',sans-serif;font-size:22px;font-weight:700;letter-spacing:3px;color:#fff;text-transform:uppercase;position:relative;z-index:1;}
+.bk-hd p{font-size:11px;color:rgba(255,255,255,.65);margin-top:5px;letter-spacing:1.5px;position:relative;z-index:1;}
+.bk-prev{display:flex;align-items:center;gap:14px;background:rgba(255,69,0,.07);border-bottom:1px solid var(--border);padding:14px 28px;}
+.bk-prev-ico{width:68px;height:44px;border-radius:7px;border:1px solid rgba(255,69,0,.3);flex-shrink:0;background:var(--bg3);display:flex;align-items:center;justify-content:center;font-size:28px;}
+.bk-prev-nm{font-family:'Orbitron',sans-serif;font-size:14px;font-weight:700;color:var(--fire);}
+.bk-prev-pr{font-size:11px;color:var(--sub);margin-top:2px;}
+.bk-body{padding:28px 32px;}
+.bk-sec{margin-bottom:26px;}
+.bk-sec-ttl{font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:700;color:var(--fire2);letter-spacing:1.5px;text-transform:uppercase;border-bottom:1px solid var(--border);padding-bottom:7px;margin-bottom:14px;display:flex;align-items:center;gap:7px;}
+.fg2{display:grid;grid-template-columns:1fr 1fr;gap:13px;}
+.fg3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:13px;}
+.fg1{display:grid;grid-template-columns:1fr;gap:13px;}
+.fg{display:flex;flex-direction:column;gap:5px;}
+.fg.s2{grid-column:1/-1;}
+label{font-size:10px;font-weight:700;color:var(--sub);letter-spacing:.9px;text-transform:uppercase;}
+input,select,textarea{background:var(--bg3);border:1px solid var(--border);border-radius:7px;color:var(--text);font-family:'Exo 2',sans-serif;font-size:14px;padding:10px 12px;outline:none;transition:border-color .18s;width:100%;}
+input:focus,select:focus,textarea:focus{border-color:var(--fire);}
+input[readonly]{color:var(--gold);font-family:'Orbitron',sans-serif;font-size:12px;cursor:default;}
+select option{background:var(--bg3);}
+textarea{resize:vertical;min-height:72px;}
+.calc-box{background:rgba(255,69,0,.04);border:1px solid rgba(255,69,0,.18);border-radius:10px;padding:16px;margin-top:12px;}
+.calc-ttl{font-family:'Rajdhani',sans-serif;font-size:11px;font-weight:700;color:var(--fire);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:11px;}
+.cr{display:flex;justify-content:space-between;align-items:center;font-size:13px;margin-bottom:6px;gap:8px;}
+.cr span{color:var(--sub);}
+.cr b{color:var(--text);font-family:'Orbitron',sans-serif;font-size:11px;font-weight:400;}
+.cr.tot{border-top:1px solid var(--border);padding-top:8px;margin-top:4px;}
+.cr.tot b{color:var(--gold);font-size:15px;font-weight:700;}
+.pay-g{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-bottom:16px;}
+.pay-opt{background:var(--bg3);border:2px solid var(--border);border-radius:9px;padding:13px 8px;text-align:center;cursor:pointer;transition:all .18s;}
+.pay-opt:hover{border-color:rgba(255,69,0,.45);}
+.pay-opt.on{border-color:var(--fire);background:rgba(255,69,0,.07);}
+.pay-ico{font-size:22px;margin-bottom:5px;}
+.pay-lbl{font-size:10px;font-weight:700;color:var(--text);letter-spacing:.5px;}
+.pay-sub{font-size:9px;color:var(--sub);margin-top:2px;}
+.bk-submit{width:100%;background:linear-gradient(135deg,var(--fire),var(--amber));color:#000;border:none;border-radius:10px;padding:16px;font-family:'Orbitron',sans-serif;font-size:14px;font-weight:700;letter-spacing:1px;cursor:pointer;transition:all .22s;text-transform:uppercase;margin-top:8px;}
+.bk-submit:hover{filter:brightness(1.08);transform:translateY(-2px);box-shadow:0 12px 35px rgba(255,69,0,.55);}
+
+/* RECEIPT */
+.rcp-outer{max-width:620px;margin:40px auto;padding:0 22px 80px;}
+#rcp-box{background:var(--card);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;box-shadow:0 24px 70px rgba(0,0,0,.6);}
+.rcp-hdr{background:linear-gradient(135deg,var(--fire),var(--amber));padding:26px 32px;text-align:center;position:relative;overflow:hidden;}
+.rcp-hdr::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 8px,rgba(0,0,0,.04) 8px,rgba(0,0,0,.04) 16px);}
+.rcp-hdr h2{font-family:'Orbitron',sans-serif;font-size:19px;font-weight:700;letter-spacing:3px;color:#000;text-transform:uppercase;position:relative;z-index:1;}
+.rcp-hdr p{font-size:10px;color:rgba(0,0,0,.55);margin-top:3px;letter-spacing:1.5px;position:relative;z-index:1;}
+.rcp-body{padding:26px 32px;}
+.rcp-id{font-family:'Orbitron',sans-serif;font-size:9px;color:var(--dim);letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;}
+.status-pill{display:inline-flex;align-items:center;gap:5px;background:rgba(34,197,94,.1);color:var(--green);border:1px solid rgba(34,197,94,.22);border-radius:100px;padding:3px 13px;font-size:11px;font-weight:700;margin-bottom:14px;}
+.rcp-sec{font-family:'Rajdhani',sans-serif;font-size:10px;font-weight:700;color:var(--fire);letter-spacing:1.5px;text-transform:uppercase;border-bottom:1px solid var(--border);padding-bottom:5px;margin:14px 0 9px;}
+.rcp-row{display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px;gap:10px;}
+.rcp-row span{color:var(--sub);flex-shrink:0;}
+.rcp-row b{color:var(--text);text-align:right;}
+.rcp-total{background:var(--bg3);border-radius:9px;padding:13px 16px;display:flex;justify-content:space-between;align-items:center;margin-top:13px;}
+.rcp-total span{font-size:12px;color:var(--sub);font-weight:600;}
+.rcp-total b{font-family:'Orbitron',sans-serif;font-size:20px;color:var(--gold);}
+.rcp-footer{padding:13px 32px;border-top:1px solid var(--border);text-align:center;font-size:10px;color:var(--sub);line-height:1.9;}
+.rcp-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:20px;}
+#rcp-btns{display:none;}
+
+/* ---------------------------------------
+   LIVE TRACKER PAGE
+--------------------------------------- */
+#tracker-page{display:none;position:relative;z-index:1;}
+#tracker-page.show{display:flex;flex-direction:column;}
+.tracker-body{display:grid;grid-template-columns:300px 1fr;height:calc(100vh - 66px);}
+
+/* Tracker Sidebar */
+.t-sidebar{background:var(--card);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden;}
+.t-sb-hdr{padding:14px;border-bottom:1px solid var(--border);background:var(--bg3);}
+.t-sb-ttl{font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:10px;display:flex;align-items:center;gap:6px;}
+.t-search{display:flex;align-items:center;gap:8px;background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:8px 12px;margin-bottom:10px;}
+.t-search input{border:none;outline:none;background:none;font-family:'Exo 2',sans-serif;font-size:13px;color:var(--text);width:100%;}
+.t-search input::placeholder{color:var(--dim);}
+.route-pills{display:flex;gap:5px;flex-wrap:wrap;}
+.rpill{padding:3px 10px;border-radius:20px;font-size:10px;font-weight:700;border:1.5px solid var(--border);background:transparent;color:var(--sub);cursor:pointer;transition:all .18s;white-space:nowrap;letter-spacing:.5px;}
+.rpill.act{color:#fff;border-color:transparent;}
+.t-stats{display:grid;grid-template-columns:repeat(3,1fr);background:var(--bg2);border-bottom:1px solid var(--border);}
+.ts{padding:10px;text-align:center;}
+.ts-n{font-family:'Orbitron',sans-serif;font-size:18px;font-weight:700;}
+.ts-l{font-size:9px;color:var(--sub);letter-spacing:1px;text-transform:uppercase;margin-top:2px;}
+.t-bus-list{flex:1;overflow-y:auto;padding:10px;display:flex;flex-direction:column;gap:7px;}
+.t-bus-list::-webkit-scrollbar{width:4px;}
+.t-bus-list::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
+.tbus-card{background:var(--bg3);border:1.5px solid var(--border);border-radius:11px;padding:11px 13px;cursor:pointer;transition:all .18s;position:relative;overflow:hidden;}
+.tbus-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;border-radius:3px 0 0 3px;background:var(--stripe);}
+.tbus-card:hover{border-color:rgba(255,215,0,.3);box-shadow:0 8px 24px rgba(0,0,0,.4);}
+.tbus-card.sel{border-color:var(--gold);box-shadow:0 0 0 2px rgba(255,215,0,.25);}
+.tbc-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:7px;}
+.tbus-id{font-family:'DM Mono',monospace;font-size:14px;font-weight:500;color:var(--text);}
+.stag{font-size:9px;font-weight:700;padding:2px 8px;border-radius:20px;text-transform:uppercase;letter-spacing:.6px;}
+.stag-on{background:rgba(34,197,94,.15);color:#22c55e;}
+.stag-del{background:rgba(255,165,0,.15);color:#ffa040;}
+.stag-stp{background:rgba(255,69,0,.15);color:var(--fire);}
+.tbc-route{font-size:11px;color:var(--sub);margin-bottom:6px;}
+.tbc-meta{display:flex;gap:10px;font-family:'DM Mono',monospace;font-size:10px;color:var(--dim);}
+.tprog{height:2px;background:var(--border);border-radius:1px;margin-top:8px;overflow:hidden;}
+.tprog-fill{height:100%;border-radius:1px;transition:width 1s ease;}
+
+/* MAP area */
+.t-map-area{display:flex;flex-direction:column;background:var(--track-bg);overflow:hidden;}
+.t-toolbar{background:rgba(6,8,13,.95);border-bottom:1px solid var(--border);padding:10px 18px;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;backdrop-filter:blur(12px);}
+.sel-info{display:flex;align-items:center;gap:10px;font-size:13px;}
+.sel-badge{background:linear-gradient(135deg,var(--fire),var(--amber));color:#000;padding:4px 12px;border-radius:6px;font-weight:700;font-size:11px;font-family:'Orbitron',sans-serif;}
+.tb-btns{display:flex;gap:7px;}
+.tbtn{padding:7px 14px;border-radius:7px;border:1px solid var(--border);background:var(--card2);font-family:'Exo 2',sans-serif;font-size:11px;font-weight:600;cursor:pointer;transition:all .18s;color:var(--sub);}
+.tbtn:hover{border-color:var(--gold);color:var(--gold);}
+.tbtn-fire{background:linear-gradient(135deg,var(--fire),var(--amber));color:#000;border-color:transparent;font-weight:700;}
+.tbtn-fire:hover{filter:brightness(1.1);}
+.map-wrap{flex:1;position:relative;overflow:hidden;}
+#mapCanvas{width:100%;height:100%;display:block;cursor:grab;}
+#mapCanvas:active{cursor:grabbing;}
+.detail-strip{background:rgba(6,8,13,.95);border-top:1px solid var(--border);padding:11px 18px;display:grid;grid-template-columns:repeat(5,1fr);gap:10px;}
+.dc{background:var(--card2);border:1px solid var(--border);border-radius:9px;padding:10px 12px;}
+.dc-label{font-size:9px;color:var(--sub);text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px;}
+.dc-val{font-size:14px;font-weight:600;font-family:'DM Mono',monospace;color:var(--gold);}
+
+/* POPUP */
+#map-popup{position:absolute;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px 16px;box-shadow:0 14px 40px rgba(0,0,0,.6);font-size:12px;min-width:200px;z-index:50;display:none;pointer-events:none;}
+#map-popup h4{font-family:'Orbitron',sans-serif;font-size:12px;color:var(--gold);margin-bottom:8px;border-bottom:1px solid var(--border);padding-bottom:6px;letter-spacing:1px;}
+#map-popup p{color:var(--sub);line-height:1.6;margin-bottom:4px;}
+
+/* TOAST */
+#toast{position:fixed;bottom:24px;right:24px;padding:11px 22px;border-radius:9px;font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:700;letter-spacing:.5px;z-index:9999;pointer-events:none;transform:translateY(70px);opacity:0;transition:all .3s cubic-bezier(.34,1.56,.64,1);}
+#toast.show{transform:translateY(0);opacity:1;}
+#toast.ok{background:var(--green);color:#000;}
+#toast.err{background:var(--fire);color:#fff;}
+#toast.info{background:var(--card2);color:var(--text);border:1px solid var(--border);}
+
+footer{background:var(--bg2);border-top:1px solid var(--border);padding:22px 20px;text-align:center;font-size:12px;color:var(--sub);position:relative;z-index:1;}
+footer b{color:var(--gold);}
+
+@media(max-width:760px){
+  #nav{padding:0 10px;}
+  .nb{padding:5px 7px;font-size:9px;}
+  .tracker-body{grid-template-columns:1fr;grid-template-rows:260px 1fr;}
+  .t-sidebar{max-height:260px;}
+  .detail-strip{grid-template-columns:repeat(3,1fr);}
+  .bk-body{padding-left:14px;padding-right:14px;}
+  .fg2,.fg3{grid-template-columns:1fr;}
+  .pay-g{grid-template-columns:repeat(2,1fr);}
+  .stat{min-width:50%;border-right:none;border-bottom:1px solid var(--border);}
+}
+</style>
+</head>
+<body>
+
+<!-- Particles -->
+<div id="bgfx"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="logo-area" onclick="go('home')">
+    <div class="logo-icon">??</div>
+    <div class="logo-text">Sri Sakthi Transport<small>ALL INDIA TOURS</small></div>
+  </div>
+  <div class="navlinks">
+    <button class="nb on" onclick="go('home')">?? Home</button>
+    <button class="nb" onclick="go('fleet')">?? Fleet</button>
+    <button class="nb" onclick="go('tracker')">?? Live Track</button>
+    <button class="nb cta" onclick="go('booking')">?? Book Now</button>
+  </div>
+  <div style="display:flex;align-items:center;gap:10px;flex-shrink:0;">
+    <div class="nav-live"><div class="live-dot"></div>LIVE</div>
+    <div id="nav-clock" style="font-family:'DM Mono',monospace;font-size:11px;color:var(--sub);"></div>
+  </div>
+</nav>
+
+<!-- -------------- HOME -------------- -->
+<div id="home" class="page show">
+  <div id="hero">
+    <div class="hero-glow"></div>
+    <div class="badge-pill">?? Trusted Since 2010 — All India Tours</div>
+    <div class="divider-fire"></div>
+    <h1 class="hero-title">Sri Sakthi<br>Transport</h1>
+    <div class="hero-sub">Premium Bus Rentals · All India · 24/7</div>
+    <p class="hero-desc">Luxury AC & Non-AC buses with live GPS tracking, professional drivers and complete travel comfort for every journey across India.</p>
+    <div class="hero-btns">
+      <button class="btn btn-fire" onclick="go('booking')">?? Book Your Bus</button>
+      <button class="btn btn-cyan" onclick="go('tracker')">?? Live Track Fleet</button>
+      <button class="btn btn-ghost" onclick="go('fleet')">?? View Fleet</button>
+    </div>
+    <div class="stats-row">
+      <div class="stat"><div class="stat-n">15+</div><div class="stat-l">Years Experience</div></div>
+      <div class="stat"><div class="stat-n">4</div><div class="stat-l">Premium Buses</div></div>
+      <div class="stat"><div class="stat-n">500+</div><div class="stat-l">Tours Completed</div></div>
+      <div class="stat"><div class="stat-n">24/7</div><div class="stat-l">Support Available</div></div>
+      <div class="stat"><div class="stat-n">????</div><div class="stat-l">All India Service</div></div>
+    </div>
+  </div>
+
+  <div class="inner">
+    <div class="sec-ttl">Our <span class="hi">Services</span></div>
+    <div class="rule"></div>
+    <p class="sec-sub">Comprehensive travel solutions for every occasion</p>
+    <div class="srv-g">
+      <div class="srv-c"><div class="srv-ico">??</div><div class="srv-h">Temple Tours</div><div class="srv-p">Pilgrimage circuits across Tamil Nadu, Karnataka & Andhra.</div></div>
+      <div class="srv-c"><div class="srv-ico">??</div><div class="srv-h">School Trips</div><div class="srv-p">Educational tours with experienced drivers & safety-first protocol.</div></div>
+      <div class="srv-c"><div class="srv-ico">??</div><div class="srv-h">Corporate Tours</div><div class="srv-p">Conference transfers, team outings & seamless city-to-city moves.</div></div>
+      <div class="srv-c"><div class="srv-ico">??</div><div class="srv-h">Wedding Fleets</div><div class="srv-p">Decorated buses for processions, guest transport & baraat.</div></div>
+      <div class="srv-c"><div class="srv-ico">???</div><div class="srv-h">Hill Stations</div><div class="srv-p">Ooty, Kodaikanal, Munnar & more — scenic hill routes.</div></div>
+      <div class="srv-c"><div class="srv-ico">???</div><div class="srv-h">Beach Getaways</div><div class="srv-p">Rameswaram, Mahabalipuram, Pondicherry & coastal pilgrim spots.</div></div>
+    </div>
+  </div>
+
+  <div class="inner" style="padding-top:0;">
+    <div class="sec-ttl">Why Choose <span class="hi">Us</span></div>
+    <div class="rule"></div>
+    <p class="sec-sub">The Sri Sakthi advantage — where every detail matters</p>
+    <div class="why-g">
+      <div class="why-c"><h4>?? Live GPS Tracking</h4><p>Track your bus in real-time directly from our platform. Full transparency on speed, location & ETA.</p></div>
+      <div class="why-c"><h4>?? Premium AC Comfort</h4><p>Push-back luxury seats, chilled AC, curtains and ample luggage space on every long journey.</p></div>
+      <div class="why-c"><h4>????? Expert Drivers</h4><p>Verified, licensed drivers with 10+ years of route experience and clean safety records.</p></div>
+      <div class="why-c"><h4>?? Instant Receipt</h4><p>Digital booking confirmation with detailed receipt generated immediately upon confirmation.</p></div>
+      <div class="why-c"><h4>?? Transparent Pricing</h4><p>All-inclusive quotes — no hidden charges. GST invoices available for corporate bookings.</p></div>
+      <div class="why-c"><h4>?? 24/7 Helpline</h4><p>WhatsApp & call support around the clock. We're with you from booking to drop-off.</p></div>
+    </div>
+  </div>
+
+  <div class="inner" style="padding-top:0;">
+    <div class="sec-ttl">Contact <span class="hi">Us</span></div>
+    <div class="rule"></div>
+    <p class="sec-sub" style="margin-top:10px;">We respond fast — reach out any time</p>
+    <div class="contact-g">
+      <div class="cc"><div class="cc-ico">??</div><div class="cc-l">Call / WhatsApp</div><div class="cc-v" style="color:var(--gold);">6381170270</div></div>
+      <div class="cc"><div class="cc-ico">??</div><div class="cc-l">Location</div><div class="cc-v">Erode, Tamil Nadu</div></div>
+      <div class="cc"><div class="cc-ico">?</div><div class="cc-l">Working Hours</div><div class="cc-v">24 Hrs / 7 Days</div></div>
+      <div class="cc"><div class="cc-ico">????</div><div class="cc-l">Service Area</div><div class="cc-v">All India</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- -------------- FLEET -------------- -->
+<div id="fleet" class="page">
+  <div class="fleet-wrap">
+    <div class="fleet-hdr">
+      <div>
+        <div class="flt-ttl">Our <span>Fleet</span></div>
+        <div class="flt-sub">Click any bus to book instantly</div>
+        <div class="fire-rule2"></div>
+      </div>
+      <select id="fl-filter" onchange="filterFleet(this.value)" style="width:auto;padding:9px 14px;background:var(--card);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'Exo 2',sans-serif;font-size:13px;">
+        <option value="">All Buses</option>
+        <option value="AC">AC Buses Only</option>
+        <option value="nonac">Non-AC Only</option>
+      </select>
+    </div>
+    <div class="bus-g" id="bus-g"></div>
+  </div>
+</div>
+
+<!-- -------------- LIVE TRACKER -------------- -->
+<div id="tracker" class="page" style="padding:0;">
+  <div class="tracker-body">
+    <!-- Sidebar -->
+    <aside class="t-sidebar">
+      <div class="t-sb-hdr">
+        <div class="t-sb-ttl">??? Live Fleet</div>
+        <div class="t-search">
+          <span style="color:var(--dim);font-size:13px;">??</span>
+          <input id="t-searchQ" type="text" placeholder="Search bus ID or route…">
+        </div>
+        <div class="route-pills" id="routePills"></div>
+      </div>
+      <div class="t-stats">
+        <div class="ts"><div class="ts-n" id="sActive" style="color:var(--green);">0</div><div class="ts-l">Active</div></div>
+        <div class="ts"><div class="ts-n" id="sDelayed" style="color:var(--amber);">0</div><div class="ts-l">Delayed</div></div>
+        <div class="ts"><div class="ts-n" id="sStopped" style="color:var(--fire);">0</div><div class="ts-l">At Stop</div></div>
+      </div>
+      <div class="t-bus-list" id="tBusList"></div>
+    </aside>
+
+    <!-- Map -->
+    <div class="t-map-area">
+      <div class="t-toolbar">
+        <div class="sel-info">
+          <div class="sel-badge" id="selBadge">—</div>
+          <span id="selInfo" style="color:var(--sub);font-size:12px;">Select a bus to track</span>
+        </div>
+        <div class="tb-btns">
+          <button class="tbtn" id="showAllBtn">? Show All</button>
+          <button class="tbtn" id="alertBtn">?? Set Alert</button>
+          <button class="tbtn tbtn-fire" onclick="go('booking')">?? Book This Bus</button>
+        </div>
+      </div>
+
+      <div class="map-wrap">
+        <canvas id="mapCanvas"></canvas>
+        <div id="map-popup">
+          <h4 id="popTitle"></h4>
+          <p id="popDesc"></p>
+          <p id="popEta"></p>
+        </div>
+      </div>
+
+      <div class="detail-strip">
+        <div class="dc"><div class="dc-label">Bus ID</div><div class="dc-val" id="dId">—</div></div>
+        <div class="dc"><div class="dc-label">Speed</div><div class="dc-val" id="dSpd">—</div></div>
+        <div class="dc"><div class="dc-label">Next Stop</div><div class="dc-val" id="dNext" style="font-size:11px;">—</div></div>
+        <div class="dc"><div class="dc-label">ETA</div><div class="dc-val" id="dEta">—</div></div>
+        <div class="dc"><div class="dc-label">Passengers</div><div class="dc-val" id="dPax">—</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- -------------- BOOKING -------------- -->
+<div id="booking" class="page">
+  <div class="bk-wrap">
+    <div class="bk-panel">
+      <div class="bk-hd">
+        <h2>Book Your Bus</h2>
+        <p>Sri Sakthi Transport — All India Tours — ?? 6381170270</p>
+      </div>
+      <div class="bk-prev">
+        <div class="bk-prev-ico" id="prev-ico">??</div>
+        <div>
+          <div class="bk-prev-nm" id="prev-nm">Select a bus below</div>
+          <div class="bk-prev-pr" id="prev-pr">Choose from the dropdown to see pricing</div>
+        </div>
+      </div>
+      <div class="bk-body">
+        <div class="bk-sec">
+          <div class="bk-sec-ttl">?? Bus Selection</div>
+          <div class="fg2">
+            <div class="fg">
+              <label>Select Bus *</label>
+              <select id="f-bus" onchange="onBusPick()">
+                <option value="">— Choose a Bus —</option>
+                <option value="Thalaiva|25000|0">Thalaiva — ?25,000/day (AC, Push-back, 48 Seats)</option>
+                <option value="Komban|30000|1">Komban — ?30,000/day (AC, Push-back, 50 Seats)</option>
+                <option value="Andavar|25000|2">Andavar — ?25,000/day (AC, Push-back, 45 Seats)</option>
+                <option value="Kumaran|20000|3">Kumaran — ?20,000/day (Non-AC, Push-back, 45 Seats)</option>
+              </select>
+            </div>
+            <div class="fg">
+              <label>Journey Date *</label>
+              <input type="date" id="f-date">
+            </div>
+            <div class="fg">
+              <label>From Location *</label>
+              <input type="text" id="f-from" placeholder="e.g. Erode">
+            </div>
+            <div class="fg">
+              <label>To Location *</label>
+              <input type="text" id="f-to" placeholder="e.g. Tirupati">
+            </div>
+          </div>
+        </div>
+
+        <div class="bk-sec">
+          <div class="bk-sec-ttl">??? Trip Details</div>
+          <div class="fg3">
+            <div class="fg"><label>No. of Days *</label><input type="number" id="f-days" min="1" value="1" oninput="recalc()"></div>
+            <div class="fg"><label>No. of Passengers</label><input type="number" id="f-pax" min="1" value="40"></div>
+            <div class="fg"><label>Return Trip?</label>
+              <select id="f-return"><option value="No">One Way</option><option value="Yes">Round Trip</option></select>
+            </div>
+            <div class="fg"><label>Pickup Time</label><input type="time" id="f-time" value="06:00"></div>
+            <div class="fg"><label>Trip Purpose</label>
+              <select id="f-purpose">
+                <option>Temple / Pilgrimage</option><option>School / College Trip</option>
+                <option>Corporate Tour</option><option>Wedding</option><option>Tourism</option>
+              </select>
+            </div>
+            <div class="fg"><label>Stops</label><input type="text" id="f-stops" placeholder="e.g. Coimbatore, Madurai"></div>
+          </div>
+        </div>
+
+        <div class="bk-sec">
+          <div class="bk-sec-ttl">?? Customer Info</div>
+          <div class="fg2">
+            <div class="fg"><label>Full Name *</label><input type="text" id="f-name" placeholder="Your name"></div>
+            <div class="fg"><label>Mobile *</label><input type="tel" id="f-mobile" placeholder="10-digit number"></div>
+            <div class="fg"><label>WhatsApp</label><input type="tel" id="f-wa" placeholder="WhatsApp number"></div>
+            <div class="fg"><label>Email</label><input type="email" id="f-email" placeholder="email@example.com"></div>
+            <div class="fg"><label>ID Type</label>
+              <select id="f-idtype"><option>Aadhaar Card</option><option>PAN Card</option><option>Voter ID</option><option>Passport</option><option>Driving Licence</option></select>
+            </div>
+            <div class="fg"><label>ID Number</label><input type="text" id="f-idnum" placeholder="ID number"></div>
+            <div class="fg s2"><label>Address</label><textarea id="f-addr" placeholder="Pickup address…" rows="2"></textarea></div>
+          </div>
+        </div>
+
+        <div class="bk-sec">
+          <div class="bk-sec-ttl">?? Payment</div>
+          <div class="fg2">
+            <div class="fg"><label>GST %</label>
+              <select id="f-gst" onchange="recalc()"><option value="0">0% (No GST)</option><option value="5">5%</option><option value="12">12%</option><option value="18">18%</option></select>
+            </div>
+            <div class="fg"><label>Advance Paid (?)</label><input type="number" id="f-adv" min="0" value="0" oninput="recalc()"></div>
+            <div class="fg"><label>Balance Due</label><input type="text" id="f-bal" readonly placeholder="Auto calculated"></div>
+          </div>
+          <div class="calc-box">
+            <div class="calc-ttl">?? Cost Summary</div>
+            <div class="cr"><span>Price / Day</span><b id="cs-p">?0</b></div>
+            <div class="cr"><span>No. of Days</span><b id="cs-d">1</b></div>
+            <div class="cr"><span>Subtotal</span><b id="cs-s">?0</b></div>
+            <div class="cr"><span>GST</span><b id="cs-g">?0 (0%)</b></div>
+            <div class="cr tot"><span>Total Amount</span><b id="cs-t">?0</b></div>
+            <div class="cr"><span>Advance Paid</span><b id="cs-a" style="color:var(--green)">?0</b></div>
+            <div class="cr"><span>Balance Due</span><b id="cs-b" style="color:var(--amber)">?0</b></div>
+          </div>
+          <div style="margin-top:14px;">
+            <div class="calc-ttl">Payment Mode</div>
+            <div class="pay-g">
+              <div class="pay-opt on" onclick="setPay('cash',this)"><div class="pay-ico">??</div><div class="pay-lbl">Cash</div><div class="pay-sub">On journey day</div></div>
+              <div class="pay-opt" onclick="setPay('upi',this)"><div class="pay-ico">??</div><div class="pay-lbl">UPI</div><div class="pay-sub">GPay / PhonePe</div></div>
+              <div class="pay-opt" onclick="setPay('bank',this)"><div class="pay-ico">??</div><div class="pay-lbl">Bank Transfer</div><div class="pay-sub">NEFT / IMPS</div></div>
+              <div class="pay-opt" onclick="setPay('cheque',this)"><div class="pay-ico">??</div><div class="pay-lbl">Cheque</div><div class="pay-sub">Corporate only</div></div>
+            </div>
+          </div>
+          <div class="fg s2" style="margin-top:4px;"><label>Notes</label><textarea id="f-notes" placeholder="Special requests, dietary needs…" rows="2"></textarea></div>
+        </div>
+
+        <button class="bk-submit" onclick="doConfirm()">? Confirm Booking & Generate Receipt</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- -------------- RECEIPT -------------- -->
+<div id="receipt" class="page">
+  <div class="rcp-outer">
+    <div id="rcp-box"></div>
+    <div id="rcp-btns" class="rcp-actions">
+      <button class="btn btn-gold" onclick="doPrint()">??? Print Receipt</button>
+      <button class="btn btn-ghost" onclick="go('booking')">?? New Booking</button>
+      <button class="btn btn-cyan" onclick="go('tracker')">?? Track Your Bus</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div id="toast"></div>
+
+<footer>
+  <b>Sri Sakthi Transport</b> — All India Tours &nbsp;|&nbsp; ?? 6381170270 &nbsp;|&nbsp; ?? Erode, Tamil Nadu &nbsp;|&nbsp; ? 24/7 Service<br>
+  <span style="font-size:10px;opacity:.5;">Now with Live GPS Fleet Tracking</span>
+</footer>
+
+<script>
+/* ---------------------------------------
+   NAVIGATION
+--------------------------------------- */
+var PAGES = ['home','fleet','tracker','booking','receipt'];
+function go(id){
+  PAGES.forEach(p=>{
+    var el=document.getElementById(p);
+    el.className=el.className.replace(' show','').trim();
+  });
+  var pg=document.getElementById(id);
+  if(pg) pg.className+=' show';
+  document.querySelectorAll('.nb').forEach(b=>{b.className=b.className.replace(' on','').trim();});
+  var map={'home':0,'fleet':1,'tracker':2,'booking':3};
+  if(map[id]!==undefined) document.querySelectorAll('.nb')[map[id]].className+=' on';
+  window.scrollTo(0,0);
+  if(id==='fleet') renderFleet('');
+  if(id==='tracker') initTracker();
+}
+
+/* ---------------------------------------
+   PARTICLES
+--------------------------------------- */
+(function(){
+  var fx=document.getElementById('bgfx');
+  for(var i=0;i<28;i++){
+    var d=document.createElement('div');
+    d.className='dot';
+    var s=Math.random()*4+2;
+    var colors=['#ff4500','#ff9900','#ffd700','#ff6030','#00e5ff'];
+    d.style.cssText='width:'+s+'px;height:'+s+'px;left:'+Math.random()*100+'%;background:'+colors[Math.floor(Math.random()*colors.length)]+';animation-duration:'+(Math.random()*15+8)+'s;animation-delay:'+(-Math.random()*15)+'s;';
+    fx.appendChild(d);
+  }
+})();
+
+/* ---------------------------------------
+   CLOCK
+--------------------------------------- */
+function updateClock(){
+  document.getElementById('nav-clock').textContent=new Date().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+}
+setInterval(updateClock,1000);updateClock();
+
+/* ---------------------------------------
+   FLEET DATA
+--------------------------------------- */
+var BUSES=[
+  {id:0,name:'Thalaiva',tag:'?? LUXURY AC',plate:'TN33 AB 1234',driver:'Rajan K.',ac:true,seats:48,price:25000,cap:48,emoji:'??',color:'#ff4500',
+   features:['32" LED TV','Individual USB Charging','Blanket & Pillow','Recliner Seats']},
+  {id:1,name:'Komban',tag:'? PREMIUM AC',plate:'TN33 CD 5678',driver:'Suresh M.',ac:true,seats:50,price:30000,cap:50,emoji:'??',color:'#ffd700',
+   features:['Panoramic Windows','WiFi Hotspot','Coffee Maker','Push-back Luxury']},
+  {id:2,name:'Andavar',tag:'?? SUPER AC',plate:'TN33 EF 9012',driver:'Murugan P.',ac:true,seats:45,price:25000,cap:45,emoji:'??',color:'#00e5ff',
+   features:['CCTV Cameras','GPS Tracked','Extra Luggage Bay','Emergency Kit']},
+  {id:3,name:'Kumaran',tag:'?? NON-AC',plate:'TN33 GH 3456',driver:'Vel R.',ac:false,seats:45,price:20000,cap:45,emoji:'??',color:'#a855f7',
+   features:['Budget Friendly','All India Permit','Spacious Luggage','Curtained Windows']},
+];
+
+function renderFleet(filter){
+  var g=document.getElementById('bus-g');
+  g.innerHTML='';
+  BUSES.filter(b=>filter===''||(filter==='AC'&&b.ac)||(filter==='nonac'&&!b.ac)).forEach(function(b){
+    var el=document.createElement('div');
+    el.className='bus-c';
+    el.innerHTML=`
+      <div class="bus-thumb" style="border-bottom:2px solid ${b.color}20;">
+        <span style="font-size:70px;">${b.emoji}</span>
+        <div class="bus-ribbon">${b.tag}</div>
+      </div>
+      <div class="bus-body">
+        <div class="bus-nm">${b.name}</div>
+        <div class="bdgs">
+          ${b.ac?'<span class="b bac">AC</span>':'<span class="b bnac">Non-AC</span>'}
+          <span class="b bpb">Push-back</span>
+          <span class="b bst">${b.seats} Seats</span>
+        </div>
+        <div class="bus-specs">
+          <div class="sp">?? <b>Plate:</b> ${b.plate}</div>
+          <div class="sp">????? <b>Driver:</b> ${b.driver}</div>
+          ${b.features.map(f=>`<div class="sp">? <b>${f}</b></div>`).join('')}
+        </div>
+        <div class="bus-pr">?${b.price.toLocaleString('en-IN')}<small> / day</small></div>
+        <button class="btn-bk" onclick="bookBus('${b.name}',${b.price},${b.id})">?? Book ${b.name}</button>
+      </div>`;
+    g.appendChild(el);
+  });
+}
+
+function filterFleet(v){renderFleet(v);}
+
+function bookBus(name,price,idx){
+  var sel=document.getElementById('f-bus');
+  sel.value=name+'|'+price+'|'+idx;
+  onBusPick();
+  go('booking');
+}
+
+/* ---------------------------------------
+   BOOKING
+--------------------------------------- */
+var PAY='cash';
+function setPay(v,el){
+  PAY=v;
+  document.querySelectorAll('.pay-opt').forEach(x=>x.classList.remove('on'));
+  el.classList.add('on');
+}
+
+function onBusPick(){
+  var v=document.getElementById('f-bus').value;
+  if(!v){document.getElementById('prev-nm').textContent='Select a bus below';document.getElementById('prev-pr').textContent='Choose from the dropdown';return;}
+  var p=v.split('|');var nm=p[0];var pr=+p[1];var idx=+p[2];
+  var b=BUSES[idx];
+  document.getElementById('prev-nm').textContent=(b?b.emoji+' ':'')+nm+(b?(' — '+b.plate):'');
+  document.getElementById('prev-pr').textContent='?'+pr.toLocaleString('en-IN')+'/day · '+(b&&b.ac?'AC':'Non-AC')+' · '+(b?b.seats:'?')+' Seats · Driver: '+(b?b.driver:'?');
+  document.getElementById('prev-ico').textContent=b?b.emoji:'??';
+  recalc();
+}
+
+function recalc(){
+  var v=document.getElementById('f-bus').value;
+  if(!v)return;
+  var pr=+v.split('|')[1]||0;
+  var days=+document.getElementById('f-days').value||1;
+  var gst=+document.getElementById('f-gst').value||0;
+  var adv=+document.getElementById('f-adv').value||0;
+  var sub=pr*days,gstAmt=sub*gst/100,total=sub+gstAmt,bal=total-adv;
+  document.getElementById('f-bal').value='?'+bal.toLocaleString('en-IN');
+  document.getElementById('cs-p').textContent='?'+pr.toLocaleString('en-IN');
+  document.getElementById('cs-d').textContent=days;
+  document.getElementById('cs-s').textContent='?'+sub.toLocaleString('en-IN');
+  document.getElementById('cs-g').textContent='?'+gstAmt.toLocaleString('en-IN')+' ('+gst+'%)';
+  document.getElementById('cs-t').textContent='?'+total.toLocaleString('en-IN');
+  document.getElementById('cs-a').textContent='?'+adv.toLocaleString('en-IN');
+  document.getElementById('cs-b').textContent='?'+bal.toLocaleString('en-IN');
+}
+
+function rr(k,v){return '<div class="rcp-row"><span>'+k+'</span><b>'+v+'</b></div>';}
+
+function doConfirm(){
+  var v=document.getElementById('f-bus').value;
+  if(!v){toast('Please select a bus!','err');return;}
+  var nm=document.getElementById('f-name').value;
+  var mb=document.getElementById('f-mobile').value;
+  var fr=document.getElementById('f-from').value;
+  var to=document.getElementById('f-to').value;
+  if(!nm){toast('Please enter customer name!','err');return;}
+  if(!mb){toast('Please enter mobile number!','err');return;}
+  if(!fr||!to){toast('Please enter pickup and drop locations!','err');return;}
+
+  var p=v.split('|'),busNm=p[0],pr=+p[1],idx=+p[2];
+  var b=BUSES[idx];
+  var days=+document.getElementById('f-days').value||1;
+  var gst=+document.getElementById('f-gst').value||0;
+  var adv=+document.getElementById('f-adv').value||0;
+  var sub=pr*days,gstAmt=sub*gst/100,total=sub+gstAmt,bal=total-adv;
+  var id='SST'+Date.now().toString().slice(-8);
+  var now=new Date().toLocaleString('en-IN');
+  var dt=document.getElementById('f-date').value;
+  var dtStr=dt?new Date(dt).toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'}):'—';
+
+  var h='<div class="rcp-hdr"><h2>Sri Sakthi Transport</h2><p>Official Booking Receipt | All India Tours</p></div>'
+    +'<div class="rcp-body">'
+    +'<div class="status-pill">? BOOKING CONFIRMED</div>'
+    +'<div class="rcp-id">Receipt: '+id+' | '+now+'</div>'
+    +'<div class="rcp-sec">?? Bus Details</div>'
+    +rr('Bus Name',(b?b.emoji+' ':'')+busNm)
+    +rr('Plate No.',b?b.plate:'—')
+    +rr('Driver',b?b.driver:'—')
+    +rr('Type',b?(b.ac?'AC':'Non-AC')+', Push-back':'—')
+    +rr('Seating',b?b.seats+' Seats':'—')
+    +'<div class="rcp-sec">??? Journey Details</div>'
+    +rr('Journey Date',dtStr)
+    +rr('Pickup Time',document.getElementById('f-time').value||'—')
+    +rr('From',fr)+rr('To',to)
+    +rr('Stops',document.getElementById('f-stops').value||'None')
+    +rr('No. of Days',days+' day(s)')
+    +rr('Passengers',document.getElementById('f-pax').value)
+    +rr('Return Trip',document.getElementById('f-return').value)
+    +rr('Purpose',document.getElementById('f-purpose').value)
+    +'<div class="rcp-sec">?? Customer Info</div>'
+    +rr('Name',nm)+rr('Mobile',mb)
+    +rr('WhatsApp',document.getElementById('f-wa').value||'—')
+    +rr('Email',document.getElementById('f-email').value||'—')
+    +rr('ID Proof',document.getElementById('f-idtype').value+' — '+(document.getElementById('f-idnum').value||'—'))
+    +rr('Address',document.getElementById('f-addr').value||'—')
+    +'<div class="rcp-sec">?? Payment</div>'
+    +rr('Price / Day','?'+pr.toLocaleString('en-IN'))
+    +rr('No. of Days',days)
+    +rr('Subtotal','?'+sub.toLocaleString('en-IN'))
+    +rr('GST ('+gst+'%)','?'+gstAmt.toLocaleString('en-IN'))
+    +rr('Total Amount','?'+total.toLocaleString('en-IN'))
+    +'<div class="rcp-row"><span>Advance Paid</span><b style="color:var(--green)">?'+adv.toLocaleString('en-IN')+'</b></div>'
+    +rr('Payment Mode',PAY.toUpperCase())
+    +'<div class="rcp-total"><span>Balance Due on Journey Day</span><b>?'+bal.toLocaleString('en-IN')+'</b></div>'
+    +(document.getElementById('f-notes').value?'<div style="margin-top:12px;background:var(--bg3);border-radius:7px;padding:10px;font-size:12px;color:var(--sub)">?? <b style="color:var(--text)">Notes:</b> '+document.getElementById('f-notes').value+'</div>':'')
+    +'</div>'
+    +'<div class="rcp-footer"><b style="color:#c47d0e">Sri Sakthi Transport</b> | All India Tours<br>?? 6381170270 | ?? Erode, Tamil Nadu<br><span style="font-size:9px;opacity:.4;font-family:monospace;">'+id+'</span></div>';
+
+  document.getElementById('rcp-box').innerHTML=h;
+  document.getElementById('rcp-btns').style.display='flex';
+  go('receipt');
+  toast('?? Booking confirmed! Receipt generated.','ok');
+}
+
+function doPrint(){
+  var c=document.getElementById('rcp-box').innerHTML;
+  var w=window.open('','','width=660,height=950');
+  w.document.write('<!DOCTYPE html><html><head><title>Sri Sakthi Transport Receipt</title>'
+    +'<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=Orbitron:wght@700&family=Exo+2:wght@400;600&display=swap" rel="stylesheet">'
+    +'<style>*{box-sizing:border-box;margin:0;padding:0;}body{font-family:"Exo 2",sans-serif;background:#fff;color:#111;}'
+    +'.rcp-hdr{background:linear-gradient(135deg,#ff4500,#ff9900);padding:22px 28px;text-align:center;}'
+    +'.rcp-hdr h2{font-family:"Orbitron",sans-serif;font-size:17px;letter-spacing:3px;color:#000;text-transform:uppercase;}'
+    +'.rcp-hdr p{font-size:10px;color:rgba(0,0,0,.55);margin-top:3px;letter-spacing:1px;}'
+    +'.rcp-body{padding:20px 28px;}'
+    +'.rcp-id{font-family:monospace;font-size:9px;color:#999;letter-spacing:2px;margin-bottom:12px;text-transform:uppercase;}'
+    +'.status-pill{display:inline-flex;align-items:center;background:rgba(22,163,74,.1);color:#16a34a;border:1px solid rgba(22,163,74,.25);border-radius:100px;padding:3px 12px;font-size:10px;font-weight:700;margin-bottom:12px;}'
+    +'.rcp-sec{font-size:9px;font-weight:700;color:#ff4500;letter-spacing:1.5px;text-transform:uppercase;border-bottom:1px solid #eee;padding-bottom:4px;margin:12px 0 8px;}'
+    +'.rcp-row{display:flex;justify-content:space-between;font-size:12px;margin-bottom:5px;gap:8px;}'
+    +'.rcp-row span{color:#666;flex-shrink:0;}.rcp-row b{color:#111;text-align:right;}'
+    +'.rcp-total{background:#f5f5f5;border-radius:7px;padding:11px 14px;display:flex;justify-content:space-between;align-items:center;margin-top:11px;}'
+    +'.rcp-total span{font-size:11px;color:#666;}.rcp-total b{font-family:"Orbitron",sans-serif;font-size:17px;color:#ff4500;}'
+    +'.rcp-footer{padding:12px 28px;border-top:1px solid #eee;text-align:center;font-size:10px;color:#888;line-height:1.8;}'
+    +'</style></head><body>'+c+'</body></html>');
+  w.document.close();
+  setTimeout(function(){w.print();},400);
+}
+
+/* ---------------------------------------
+   LIVE TRACKER
+--------------------------------------- */
+var canvas,ctx,W,H;
+var trackerInited=false;
+var selected=null;
+var routeFilter='all';
+var tSearchQ='';
+
+var ROUTES=[
+  {id:'Erode ? Tirupati',short:'TRP',color:'#ff4500',
+   stops:[{name:'Erode',x:.08,y:.55,icon:'??',desc:'Sri Sakthi HQ departure point'},
+          {name:'Salem',x:.25,y:.4,icon:'???',desc:'Steel city — major stop'},
+          {name:'Bangalore',x:.45,y:.28,icon:'??',desc:'IT capital'},
+          {name:'Chittoor',x:.62,y:.38,icon:'??',desc:'Mango & citrus region'},
+          {name:'Tirupati',x:.78,y:.52,icon:'??',desc:'Sacred Venkateswara Temple'}]},
+  {id:'Erode ? Ooty',short:'OTY',color:'#ffd700',
+   stops:[{name:'Erode',x:.08,y:.55,icon:'??',desc:'Departure — Erode'},
+          {name:'Gobichettipalayam',x:.18,y:.48,icon:'???',desc:'Sugar mill town'},
+          {name:'Mettupalayam',x:.3,y:.42,icon:'??',desc:'Gateway to Nilgiris'},
+          {name:'Coonoor',x:.38,y:.35,icon:'??',desc:'Tea estates — scenic'},
+          {name:'Ooty',x:.44,y:.28,icon:'???',desc:'Queen of hill stations'}]},
+  {id:'Erode ? Rameswaram',short:'RAM',color:'#00e5ff',
+   stops:[{name:'Erode',x:.08,y:.55,icon:'??',desc:'Departure'},
+          {name:'Karur',x:.22,y:.6,icon:'??',desc:'Textile hub of India'},
+          {name:'Trichy',x:.38,y:.65,icon:'??',desc:'Rock Fort city'},
+          {name:'Madurai',x:.52,y:.72,icon:'???',desc:'Temple city'},
+          {name:'Ramanathapuram',x:.65,y:.78,icon:'??',desc:'Gateway to Rameswaram'},
+          {name:'Rameswaram',x:.78,y:.82,icon:'??',desc:'Sacred island temple'}]},
+  {id:'Erode ? Munnar',short:'MUN',color:'#a855f7',
+   stops:[{name:'Erode',x:.08,y:.55,icon:'??',desc:'Departure'},
+          {name:'Coimbatore',x:.2,y:.5,icon:'???',desc:'Manchester of South India'},
+          {name:'Pollachi',x:.28,y:.56,icon:'??',desc:'Coconut capital'},
+          {name:'Udumalpet',x:.34,y:.48,icon:'??',desc:'Scenic valley town'},
+          {name:'Munnar',x:.42,y:.42,icon:'??',desc:'Tea & cardamom hills — Kerala'}]},
+];
+
+var simBuses=[];
+
+function initTracker(){
+  if(trackerInited)return;
+  trackerInited=true;
+  canvas=document.getElementById('mapCanvas');
+  ctx=canvas.getContext('2d');
+
+  // Create simulated buses (one per route + extras)
+  var statuses=['on-route','on-route','on-route','delayed','on-route','delayed','on-route','on-route','stopped'];
+  var names=BUSES.map(b=>b.name);
+  var extraNames=['Velocity','Falcon','Tiger','Pioneer','Arrow'];
+  var allNames=[...names,...extraNames];
+  allNames.slice(0,9).forEach(function(nm,i){
+    simBuses.push({
+      id:nm,
+      route:i%ROUTES.length,
+      progress:Math.random(),
+      status:statuses[i]||'on-route',
+      speed:Math.round(Math.random()*20+22),
+      pax:Math.round(Math.random()*30+10),
+      cap:BUSES[i%BUSES.length]?BUSES[i%BUSES.length].cap:48,
+    });
+  });
+
+  buildRoutePills();
+  buildTBusList();
+  updateTStats();
+
+  document.getElementById('t-searchQ').addEventListener('input',function(e){
+    tSearchQ=e.target.value.trim().toLowerCase();
+    buildTBusList();
+  });
+  document.getElementById('showAllBtn').addEventListener('click',function(){
+    selected=null;buildTBusList();updateDetail();updateSelInfo();hidePopup();
+    toast('Showing all fleet buses','info');
+  });
+  document.getElementById('alertBtn').addEventListener('click',function(){
+    if(!selected){toast('Select a bus first to set alert','err');return;}
+    var b=simBuses.find(x=>x.id===selected);
+    var ns=nextStop(b);
+    toast('?? Alert set for '+selected+' at '+ns.icon+' '+ns.name,'ok');
+  });
+  canvas.addEventListener('click',onMapClick);
+
+  resize();
+  window.addEventListener('resize',resize);
+  requestAnimationFrame(simTick);
+  toast('?? '+simBuses.length+' buses online — click to track!','ok');
+}
+
+function resize(){
+  if(!canvas)return;
+  var r=canvas.parentElement.getBoundingClientRect();
+  W=canvas.width=r.width;H=canvas.height=r.height;
+  render();
+}
+
+function clamp(v,mn,mx){return Math.max(mn,Math.min(mx,v));}
+function xy(rx,ry){return{x:rx*W,y:ry*H};}
+function lerp(a,b,t){return a+(b-a)*t;}
+
+function interpolate(stops,p){
+  if(stops.length<2)return{x:stops[0].x,y:stops[0].y};
+  var seg=stops.length-1;
+  var sp=p*seg;
+  var i=Math.min(Math.floor(sp),seg-1);
+  var t=sp-i;
+  return{x:lerp(stops[i].x,stops[i+1].x,t),y:lerp(stops[i].y,stops[i+1].y,t)};
+}
+
+function nextStop(b){
+  var stops=ROUTES[b.route].stops;
+  var seg=stops.length-1;
+  var sp=b.progress*seg;
+  var i=Math.min(Math.floor(sp)+1,stops.length-1);
+  return stops[i];
+}
+
+function etaMins(b){
+  var stops=ROUTES[b.route].stops;
+  var seg=stops.length-1;
+  var sp=b.progress*seg;
+  var nextI=Math.min(Math.floor(sp)+1,seg);
+  var rem=(nextI-sp)/seg;
+  if(rem<.005)return null;
+  return Math.max(1,Math.round(rem*200/(b.speed||30)*10));
+}
+
+function drawMapBase(){
+  // Background
+  var grad=ctx.createLinearGradient(0,0,W,H);
+  grad.addColorStop(0,'#080e1a');
+  grad.addColorStop(1,'#0d1528');
+  ctx.fillStyle=grad;ctx.fillRect(0,0,W,H);
+
+  // Grid
+  ctx.strokeStyle='rgba(31,45,69,.25)';ctx.lineWidth=1;
+  for(var x=0;x<W;x+=50){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}
+  for(var y=0;y<H;y+=50){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
+
+  // Title overlay
+  ctx.fillStyle='rgba(255,215,0,.04)';
+  ctx.font='700 '+(W*.14)+'px Orbitron,sans-serif';
+  ctx.textAlign='center';
+  ctx.fillText('LIVE MAP',W/2,H/2+W*.05);
+
+  // Watermark
+  ctx.fillStyle='rgba(255,69,0,.06)';
+  ctx.font='600 14px Exo 2,sans-serif';
+  ctx.textAlign='right';
+  ctx.fillText('Sri Sakthi Transport',W-14,H-12);
+}
+
+function drawRoute(route,ri){
+  if(routeFilter!=='all'&&route.short!==routeFilter)return;
+  var stops=route.stops;
+  ctx.beginPath();
+  stops.forEach(function(s,i){
+    var p=xy(s.x,s.y);
+    if(i===0)ctx.moveTo(p.x,p.y);else ctx.lineTo(p.x,p.y);
+  });
+  ctx.strokeStyle=route.color+'55';ctx.lineWidth=2;ctx.setLineDash([6,4]);ctx.stroke();ctx.setLineDash([]);
+
+  stops.forEach(function(s){
+    var p=xy(s.x,s.y);
+    // Glow ring
+    var grd=ctx.createRadialGradient(p.x,p.y,2,p.x,p.y,14);
+    grd.addColorStop(0,route.color+'44');grd.addColorStop(1,'transparent');
+    ctx.beginPath();ctx.arc(p.x,p.y,14,0,Math.PI*2);ctx.fillStyle=grd;ctx.fill();
+    // Dot
+    ctx.beginPath();ctx.arc(p.x,p.y,6,0,Math.PI*2);ctx.fillStyle=route.color;ctx.fill();
+    ctx.beginPath();ctx.arc(p.x,p.y,6,0,Math.PI*2);ctx.strokeStyle='rgba(255,255,255,.3)';ctx.lineWidth=1.5;ctx.stroke();
+    // Label
+    ctx.fillStyle=route.color;ctx.font='500 10px DM Mono,monospace';ctx.textAlign='center';
+    ctx.fillText(s.icon+' '+s.name,p.x,p.y-12);
+  });
+}
+
+function drawBus(bus){
+  var col=ROUTES[bus.route].color;
+  var pos=interpolate(ROUTES[bus.route].stops,bus.progress);
+  var p=xy(pos.x,pos.y);
+  var isSel=bus.id===selected;
+
+  if(isSel){
+    ctx.beginPath();ctx.arc(p.x,p.y,24,0,Math.PI*2);
+    ctx.strokeStyle=col;ctx.lineWidth=2;ctx.setLineDash([4,3]);ctx.stroke();ctx.setLineDash([]);
+  }
+  var grd=ctx.createRadialGradient(p.x,p.y,4,p.x,p.y,20);
+  grd.addColorStop(0,col+'55');grd.addColorStop(1,'transparent');
+  ctx.beginPath();ctx.arc(p.x,p.y,20,0,Math.PI*2);ctx.fillStyle=grd;ctx.fill();
+
+  var r=15;
+  ctx.beginPath();
+  ctx.roundRect(p.x-r,p.y-r*.7,r*2,r*1.4,5);
+  ctx.fillStyle=bus.status==='stopped'?'#555':col;ctx.fill();
+
+  ctx.fillStyle='rgba(255,255,255,.5)';
+  ctx.fillRect(p.x-9,p.y-6,6,5);ctx.fillRect(p.x+3,p.y-6,6,5);
+
+  ctx.fillStyle='#222';
+  ctx.beginPath();ctx.arc(p.x-7,p.y+r*.7-3,3,0,Math.PI*2);ctx.fill();
+  ctx.beginPath();ctx.arc(p.x+7,p.y+r*.7-3,3,0,Math.PI*2);ctx.fill();
+
+  ctx.fillStyle=col;ctx.font='500 9px DM Mono,monospace';ctx.textAlign='center';
+  ctx.fillText(bus.id.substring(0,7),p.x,p.y+r*.7+10);
+}
+
+function render(){
+  if(!ctx)return;
+  ctx.clearRect(0,0,W,H);
+  drawMapBase();
+  ROUTES.forEach(function(r,i){drawRoute(r,i);});
+  var vis=simBuses;
+  if(routeFilter!=='all')vis=vis.filter(b=>ROUTES[b.route].short===routeFilter);
+  if(tSearchQ)vis=vis.filter(b=>b.id.toLowerCase().includes(tSearchQ)||ROUTES[b.route].id.toLowerCase().includes(tSearchQ));
+  vis.forEach(drawBus);
+}
+
+var lastTick=0;
+function simTick(ts){
+  if(ts-lastTick>1400){
+    lastTick=ts;
+    simBuses.forEach(function(b){
+      if(b.status==='stopped')return;
+      var spd=b.status==='delayed'?.004:.011;
+      b.progress=b.progress+spd>1?0:b.progress+spd;
+      b.speed=b.status==='on-route'?clamp(b.speed+(Math.random()*6-3),22,40):clamp(b.speed+(Math.random()*4-2),8,18);
+      b.pax=clamp(b.pax+Math.round(Math.random()*5-2),5,b.cap);
+    });
+    if(selected)updateDetail();
+    buildTBusList();
+    updateTStats();
+  }
+  render();
+  requestAnimationFrame(simTick);
+}
+
+function buildRoutePills(){
+  var el=document.getElementById('routePills');
+  el.innerHTML='';
+  [['all','All'],...ROUTES.map(r=>[r.short,r.short])].forEach(function(pair){
+    var val=pair[0],lbl=pair[1];
+    var d=document.createElement('div');
+    d.className='rpill'+(routeFilter===val?' act':'');
+    d.textContent=lbl;
+    if(routeFilter===val){
+      if(val==='all')d.style.cssText='background:#ff4500;color:#fff;border-color:#ff4500;';
+      else{var r=ROUTES.find(x=>x.short===val);if(r)d.style.cssText='background:'+r.color+';color:#000;border-color:'+r.color+';';}
+    }
+    d.addEventListener('click',function(){routeFilter=val;buildRoutePills();buildTBusList();});
+    el.appendChild(d);
+  });
+}
+
+function buildTBusList(){
+  var el=document.getElementById('tBusList');
+  var vis=simBuses;
+  if(routeFilter!=='all')vis=vis.filter(b=>ROUTES[b.route].short===routeFilter);
+  if(tSearchQ)vis=vis.filter(b=>b.id.toLowerCase().includes(tSearchQ)||ROUTES[b.route].id.toLowerCase().includes(tSearchQ));
+  el.innerHTML='';
+  vis.forEach(function(b){
+    var route=ROUTES[b.route];
+    var ns=nextStop(b);
+    var em=etaMins(b);
+    var pct=Math.round(b.progress*100);
+    var tagCls=b.status==='on-route'?'stag-on':b.status==='delayed'?'stag-del':'stag-stp';
+    var tagLbl=b.status==='on-route'?'En Route':b.status==='delayed'?'Delayed':'At Stop';
+    var card=document.createElement('div');
+    card.className='tbus-card'+(b.id===selected?' sel':'');
+    card.style.setProperty('--stripe',route.color);
+    card.innerHTML=`
+      <div class="tbc-top">
+        <span class="tbus-id">${b.id}</span>
+        <span class="stag ${tagCls}">${tagLbl}</span>
+      </div>
+      <div class="tbc-route">${route.stops[0].icon} ${route.id}</div>
+      <div class="tbc-meta">
+        <span>?? ${b.speed}km/h</span>
+        <span>?? ${b.pax}/${b.cap}</span>
+        <span>?? ${ns.icon}${ns.name}</span>
+      </div>
+      <div class="tprog"><div class="tprog-fill" style="width:${pct}%;background:${route.color}"></div></div>
+    `;
+    card.addEventListener('click',function(){selectBus(b.id);});
+    el.appendChild(card);
+  });
+}
+
+function updateTStats(){
+  document.getElementById('sActive').textContent=simBuses.filter(b=>b.status==='on-route').length;
+  document.getElementById('sDelayed').textContent=simBuses.filter(b=>b.status==='delayed').length;
+  document.getElementById('sStopped').textContent=simBuses.filter(b=>b.status==='stopped').length;
+}
+
+function selectBus(id){
+  selected=selected===id?null:id;
+  buildTBusList();updateDetail();updateSelInfo();
+}
+
+function updateDetail(){
+  if(!selected){['dId','dSpd','dNext','dEta','dPax'].forEach(function(i){document.getElementById(i).textContent='—';});return;}
+  var b=simBuses.find(x=>x.id===selected);
+  if(!b)return;
+  var ns=nextStop(b);var em=etaMins(b);
+  document.getElementById('dId').textContent=b.id;
+  document.getElementById('dSpd').textContent=b.speed+' km/h';
+  document.getElementById('dNext').textContent=ns.icon+' '+ns.name;
+  document.getElementById('dEta').textContent=em?em+' min':'At stop';
+  document.getElementById('dPax').textContent=b.pax+'/'+b.cap;
+}
+
+function updateSelInfo(){
+  var badge=document.getElementById('selBadge');
+  var info=document.getElementById('selInfo');
+  if(!selected){badge.textContent='—';info.textContent='Select a bus to track';return;}
+  var b=simBuses.find(x=>x.id===selected);
+  badge.textContent=b.id;
+  info.textContent=ROUTES[b.route].id;
+}
+
+function onMapClick(e){
+  if(!canvas)return;
+  var rect=canvas.getBoundingClientRect();
+  var cx=e.clientX-rect.left,cy=e.clientY-rect.top;
+  var hit=null,minD=22;
+  simBuses.forEach(function(b){
+    var pos=interpolate(ROUTES[b.route].stops,b.progress);
+    var p=xy(pos.x,pos.y);
+    var d=Math.hypot(cx-p.x,cy-p.y);
+    if(d<minD){minD=d;hit=b.id;}
+  });
+  if(hit){selectBus(hit);hidePopup();return;}
+
+  var hitStop=null,hitRoute=null;
+  ROUTES.forEach(function(route){
+    route.stops.forEach(function(stop){
+      var p=xy(stop.x,stop.y);
+      if(Math.hypot(cx-p.x,cy-p.y)<16){hitStop=stop;hitRoute=route;}
+    });
+  });
+  if(hitStop){
+    var popup=document.getElementById('map-popup');
+    document.getElementById('popTitle').textContent=hitStop.icon+' '+hitStop.name;
+    document.getElementById('popDesc').textContent=hitStop.desc;
+    var approaching=simBuses.filter(b=>ROUTES[b.route].id===hitRoute.id&&b.status!=='stopped');
+    document.getElementById('popEta').textContent=approaching.length?'Next bus: ~'+etaMins(approaching[0])+'min':'No buses approaching';
+    var px=xy(hitStop.x,hitStop.y);
+    popup.style.left=Math.min(px.x+20,W-220)+'px';
+    popup.style.top=Math.max(px.y-90,10)+'px';
+    popup.style.display='block';
+    setTimeout(hidePopup,4000);
+  }else{hidePopup();}
+}
+
+function hidePopup(){var p=document.getElementById('map-popup');if(p)p.style.display='none';}
+
+/* ---------------------------------------
+   TOAST
+--------------------------------------- */
+function toast(msg,type){
+  var e=document.getElementById('toast');
+  e.textContent=msg;e.className='show '+(type||'ok');
+  clearTimeout(e._t);e._t=setTimeout(function(){e.className='';},3500);
+}
+
+/* ---------------------------------------
+   INIT
+--------------------------------------- */
+(function(){
+  var t=new Date().toISOString().split('T')[0];
+  document.getElementById('f-date').min=t;
+  document.getElementById('f-date').value=t;
+  renderFleet('');
+})();
+</script>
+</body>
+</html>
